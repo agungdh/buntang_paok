@@ -1,0 +1,6 @@
+{
+    "require": {
+        "gumlet/php-image-resize": "^1.8",
+        "apfelbox/php-file-download": "^2.1"
+    }
+}
