@@ -83,6 +83,8 @@ $now = date('YmdHis');
                 <th>No Surat</th>
                 <th>Pengirim</th>
                 <th>Perihal</th>
+                <th>Jenis</th>
+                <th>Prioritas</th>
                 <th>Berkas</th>
                 <th>Status</th>
               </tr>
@@ -96,6 +98,27 @@ $now = date('YmdHis');
                   <td><?php echo $item->nosurat; ?></td>
                   <td><?php echo $item->pengirim; ?></td>
                   <td><?php echo $item->perihal; ?></td>
+                  <td><?php echo $this->db->get_where('jenis', ['id_jenis' => $item->id_jenis])->row()->jenis; ?></td>
+                <?php
+                switch ($item->prioritas) {
+                  case 'st':
+                    $prioritas = 'Sangat Tinggi';
+                    break;
+                  
+                  case 't':
+                    $prioritas = 'Tinggi';
+                    break;
+                  
+                  case 'n':
+                    $prioritas = 'Normal';
+                    break;
+                  
+                  default:
+                    redirect(base_url());
+                    break;
+                }
+                ?>
+                <td><?php echo $prioritas; ?></td>
                   <td><a href="<?php echo base_url('tools/download/' . $item->id_surat); ?>"><?php echo $item->nama_file; ?></a></td>
                   <?php
                   switch ($item->status) {

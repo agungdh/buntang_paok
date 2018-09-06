@@ -48,7 +48,7 @@ class Surat extends CI_Controller {
 		$berkas = $_FILES['berkas'];
 		$data['nama_file'] = $berkas['name'];
 
-		$id_surat = $this->db->query('CALL sp_tambah_surat(?, ?, ?, ?, ?)', [$data['nosurat'], $data['tanggal_surat'], $data['pengirim'], $data['perihal'], $data['nama_file']])->row()->id;
+		$id_surat = $this->db->query('CALL sp_tambah_surat(?, ?, ?, ?, ?, ?, ?)', [$data['nosurat'], $data['tanggal_surat'], $data['pengirim'], $data['perihal'], $data['nama_file'], $data['id_jenis'], $data['prioritas']])->row()->id;
 
 		move_uploaded_file($berkas['tmp_name'], 'uploads/surat/' . $id_surat);
 

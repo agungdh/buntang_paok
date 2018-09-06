@@ -35,6 +35,28 @@
           </div>
 
           <div class="form-group">
+            <label class="control-label">Jenis</label>
+            <select class="form-control select2" required name="data[id_jenis]" id="id_jenis">
+              <?php 
+              foreach ($this->db->get('jenis')->result() as $item) {
+                ?>
+                <option value="<?php echo $item->id_jenis; ?>"><?php echo $item->jenis; ?></option>
+                <?php
+              }
+              ?>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Prioritas</label>
+            <select class="form-control select2" required name="data[prioritas]" id="prioritas">
+              <option value="st">Sangat Tinggi</option>
+              <option value="t">Tinggi</option>
+              <option value="n">Normal</option>
+            </select>
+          </div>
+
+          <div class="form-group">
             <label class="control-label">Berkas</label>
             <input class="form-control" type="file" required name="berkas">
           </div>
