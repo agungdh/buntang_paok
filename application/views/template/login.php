@@ -12,7 +12,7 @@ $now = date('YmdHis');
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/main.css'); ?>">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title><?php echo $this->db->get('config')->row()->judul_aplikasi; ?></title>
+    <title>JUDUL</title>
 
     <!-- Favicon -->
     <?php
@@ -30,7 +30,7 @@ $now = date('YmdHis');
     </section>
     <section class="login-content">
       <div class="logo">
-        <h1><?php echo $this->db->get('config')->row()->judul_aplikasi; ?></h1>
+        <h1>JUDUL</h1>
       </div>
       <div class="login-box">
         <form class="login-form" method="post" action="<?php echo base_url('welcome/login'); ?>">

@@ -13,7 +13,7 @@ $now = date('YmdHis');
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/'); ?>css/main.css">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title><?php echo $this->db->get('config')->row()->judul_aplikasi; ?></title>
+    <title>JUDUL</title>
 
     <!-- Favicon -->
     <?php
@@ -27,7 +27,7 @@ $now = date('YmdHis');
   </head>
   <body class="app sidebar-mini rtl">
     <!-- Navbar-->
-    <header class="app-header"><a class="app-header__logo" href="<?php echo base_url(); ?>"><?php echo $this->db->get('config')->row()->judul_menu; ?></a>
+    <header class="app-header"><a class="app-header__logo" href="<?php echo base_url(); ?>">MENU</a>
       <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="javascript:void(0)" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
       <!-- Navbar Right Menu-->
       <ul class="app-nav">
