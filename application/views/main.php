@@ -38,7 +38,7 @@ $now = date('YmdHis');
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#"><?php echo $this->db->get('config')->row()->judul_aplikasi; ?></a>
+        <a class="navbar-brand" href="javascript:void(0)"><?php echo $this->db->get('config')->row()->judul_aplikasi; ?></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -119,7 +119,7 @@ $now = date('YmdHis');
                       break;
                   }
                   ?>
-                  <td><a href="#" onclick="status('<?php echo $item->id_surat; ?>')"><?php echo $status; ?></a></td>
+                  <td><a href="javascript:void(0)" onclick="status('<?php echo $item->id_surat; ?>')"><?php echo $status; ?></a></td>
                 </tr>
                 <?php
               }

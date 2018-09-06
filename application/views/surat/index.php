@@ -59,11 +59,11 @@
                     break;
                 }
                 ?>
-                <td><a href="#" onclick="status('<?php echo $item->id_surat; ?>')"><?php echo $status; ?></a></td>
+                <td><a href="javascript:void(0)" onclick="status('<?php echo $item->id_surat; ?>')"><?php echo $status; ?></a></td>
                 <td>
                   <div class="btn-group">
                     <a class="btn btn-primary" href="<?php echo base_url('surat/ubah/' . $item->id_surat); ?>" data-toggle="tooltip" title="Ubah"><i class="fa fa-edit"></i></a>
-                    <a class="btn btn-primary" href="#" onclick="hapus('<?php echo $item->id_surat; ?>')" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
+                    <a class="btn btn-primary" href="javascript:void(0)" onclick="hapus('<?php echo $item->id_surat; ?>')" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
                   </div>
                 </td>
               </tr>

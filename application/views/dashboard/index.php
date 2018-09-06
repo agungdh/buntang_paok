@@ -69,7 +69,7 @@
                     break;
                 }
                 ?>
-                <td><a href="#" onclick="status('<?php echo $item->id_surat; ?>')"><?php echo $status; ?></a></td>
+                <td><a href="javascript:void(0)" onclick="status('<?php echo $item->id_surat; ?>')"><?php echo $status; ?></a></td>
               </tr>
               <?php
             }

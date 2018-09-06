@@ -85,25 +85,25 @@
                     break;
                 }
                 ?>
-                <td><a href="#" onclick="status('<?php echo $item->id_surat; ?>')"><?php echo $status; ?></a></td>
+                <td><a href="javascript:void(0)" onclick="status('<?php echo $item->id_surat; ?>')"><?php echo $status; ?></a></td>
                 <td>
                   <div class="btn-group">
                     <?php
                     if ($item->status != 'p') {
                       ?>
                       <a class="btn btn-primary" href="<?php echo base_url('surat2/disposisi/' . $item->id_surat); ?>" data-toggle="tooltip" title="Disposisi"><i class="fa fa-share"></i></a>
-                      <a class="btn btn-primary" href="#" onclick="proses('<?php echo $item->id_surat; ?>')" data-toggle="tooltip" title="Proses"><i class="fa fa-gear"></i></a>
+                      <a class="btn btn-primary" href="javascript:void(0)" onclick="proses('<?php echo $item->id_surat; ?>')" data-toggle="tooltip" title="Proses"><i class="fa fa-gear"></i></a>
                       <?php
                       if ($this->session->level == 'kd') {
                         ?>
-                        <a class="btn btn-primary" href="#" onclick="tolak('<?php echo $item->id_surat; ?>')" data-toggle="tooltip" title="Tolak"><i class="fa fa-close"></i></a>
+                        <a class="btn btn-primary" href="javascript:void(0)" onclick="tolak('<?php echo $item->id_surat; ?>')" data-toggle="tooltip" title="Tolak"><i class="fa fa-close"></i></a>
                         <?php
                       }
                       ?>                      
                       <?php
                     } else {
                       ?>
-                      <a class="btn btn-primary" href="#" onclick="selesai('<?php echo $item->id_surat; ?>')" data-toggle="tooltip" title="Selesai"><i class="fa fa-check"></i></a>
+                      <a class="btn btn-primary" href="javascript:void(0)" onclick="selesai('<?php echo $item->id_surat; ?>')" data-toggle="tooltip" title="Selesai"><i class="fa fa-check"></i></a>
                       <?php
                     }
                     ?>
