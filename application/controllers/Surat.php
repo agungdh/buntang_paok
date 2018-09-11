@@ -110,7 +110,7 @@ class Surat extends CI_Controller {
                 if ($item->id_bidang != null) {
                 	$status .= $this->db->get_where('bidang', ['id_bidang' => $item->id_bidang])->row()->bidang;
                 } else {
-                	$status .= 'Sekertaris';
+                	$status .= 'Kepala Dinas';
                 }
                 $status .= ')';
                 break;
