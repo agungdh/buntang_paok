@@ -32,7 +32,6 @@
           <div class="form-group">
             <label class="control-label">Level</label>
             <select class="form-control select2" required name="data[level]" id="level">
-              <option value="a">Administrator</option>
               <option value="kd">Kepala Dinas</option>
               <option value="s">Sekertaris</option>
               <option value="kb">Kepala Bidang</option>

@@ -34,9 +34,6 @@
                 <td><?php echo $item->username; ?></td>
                 <?php
                 switch ($item->level) {
-                  case 'a':
-                    $level = 'Administrator';
-                    break;
                   case 'kd':
                     $level = 'Kepala Dinas';
                     break;
