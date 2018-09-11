@@ -37,6 +37,28 @@
           </div>
 
           <div class="form-group">
+            <label class="control-label">Jenis</label>
+            <select class="form-control select2" required name="data[id_jenis]" id="id_jenis">
+              <?php 
+              foreach ($this->db->get('jenis')->result() as $item) {
+                ?>
+                <option <?php echo $item->id_jenis == $data['surat']->id_jenis ? 'selected' : null ?> value="<?php echo $item->id_jenis; ?>"><?php echo $item->jenis; ?></option>
+                <?php
+              }
+              ?>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Prioritas</label>
+            <select class="form-control select2" required name="data[prioritas]" id="prioritas">
+              <option <?php echo $data['surat']->prioritas == 'st' ? 'selected' : null ?> value="st">Sangat Tinggi</option>
+              <option <?php echo $data['surat']->prioritas == 't' ? 'selected' : null ?> value="t">Tinggi</option>
+              <option <?php echo $data['surat']->prioritas == 'n' ? 'selected' : null ?> value="n">Normal</option>
+            </select>
+          </div>
+
+          <div class="form-group">
             <label class="control-label">Berkas</label>
             <p><a href="<?php echo base_url('tools/download/' . $data['surat']->id_surat); ?>"><?php echo $data['surat']->nama_file; ?></a></p>
             <input class="form-control" type="file" name="berkas">
