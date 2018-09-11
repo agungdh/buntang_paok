@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+define('JUDUL', 'E-Disposisi');
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace

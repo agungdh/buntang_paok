@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 15, 2018 at 07:55 AM
+-- Generation Time: Sep 11, 2018 at 06:27 PM
 -- Server version: 10.1.34-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 5.6.36
 
@@ -26,10 +26,10 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_disposisi_surat` (IN `p_id_surat` INT, IN `p_level` ENUM('s','kb'), IN `p_id_bidang` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_disposisi_surat` (IN `p_id_surat` INT, IN `p_level` ENUM('kd','kb'), IN `p_id_bidang` INT)  NO SQL
 BEGIN
 
-IF (p_level = 's') THEN
+IF (p_level = 'kd') THEN
     UPDATE surat
     SET level = p_level,
     status = 'd'
@@ -64,7 +64,7 @@ DELETE FROM surat;
 
 END$$
 
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `sp_hapus_surat` (IN `p_id_surat` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_hapus_surat` (IN `p_id_surat` INT)  NO SQL
 BEGIN
 
 DELETE FROM log_surat
@@ -109,7 +109,7 @@ id_bidang = (SELECT id_bidang
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_tambah_surat` (IN `p_nosurat` VARCHAR(191), IN `p_tanggal_surat` DATE, IN `p_pengirim` VARCHAR(191), IN `p_perihal` VARCHAR(191), IN `p_nama_file` VARCHAR(191))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_tambah_surat` (IN `p_nosurat` VARCHAR(191), IN `p_tanggal_surat` DATE, IN `p_pengirim` VARCHAR(191), IN `p_perihal` VARCHAR(191), IN `p_nama_file` VARCHAR(191), IN `p_id_jenis` INT, IN `p_prioritas` ENUM('st','t','n'))  NO SQL
 BEGIN
 
 DECLARE v_id int(11);
@@ -120,9 +120,11 @@ tanggal_surat = p_tanggal_surat,
 pengirim = p_pengirim,
 perihal = p_perihal,
 nama_file = p_nama_file,
-level = 'kd',
+level = 's',
 id_bidang = null,
-status = 'm';
+status = 'm',
+id_jenis = p_id_jenis,
+prioritas = p_prioritas;
 
 SELECT last_insert_id() INTO v_id;
 
@@ -162,20 +164,24 @@ INSERT INTO `bidang` (`id_bidang`, `bidang`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `config`
+-- Table structure for table `jenis`
 --
 
-CREATE TABLE `config` (
-  `judul_aplikasi` varchar(191) NOT NULL,
-  `judul_menu` varchar(191) NOT NULL
+CREATE TABLE `jenis` (
+  `id_jenis` int(11) NOT NULL,
+  `jenis` varchar(191) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `config`
+-- Dumping data for table `jenis`
 --
 
-INSERT INTO `config` (`judul_aplikasi`, `judul_menu`) VALUES
-('Bintang PAOK', 'KEMPLO');
+INSERT INTO `jenis` (`id_jenis`, `jenis`) VALUES
+(1, 'Surat Undangan'),
+(2, 'Surat Edaran'),
+(3, 'Pengumuman'),
+(4, 'Permohonan'),
+(5, 'Memo');
 
 -- --------------------------------------------------------
 
@@ -196,36 +202,13 @@ CREATE TABLE `log_surat` (
 --
 
 INSERT INTO `log_surat` (`id_log_surat`, `id_surat`, `waktu`, `aksi`, `id_bidang`) VALUES
-(1, 1, '2018-08-14 23:33:05', 'm', NULL),
-(2, 2, '2018-08-14 23:33:44', 'm', NULL),
-(3, 3, '2018-08-14 23:34:13', 'm', NULL),
-(4, 2, '2018-08-14 23:54:46', 'p', NULL),
-(5, 2, '2018-08-14 23:55:09', 'p', NULL),
-(6, 2, '2018-08-14 23:55:14', 'p', NULL),
-(7, 2, '2018-08-14 23:55:17', 'p', NULL),
-(8, 1, '2018-08-14 23:56:32', 'p', NULL),
-(9, 1, '2018-08-14 23:58:55', 's', NULL),
-(10, 2, '2018-08-14 23:58:59', 's', NULL),
-(11, 4, '2018-08-14 23:59:59', 'm', NULL),
-(12, 5, '2018-08-15 00:07:43', 'm', NULL),
-(13, 4, '2018-08-15 00:34:31', 'd', NULL),
-(14, 4, '2018-08-15 00:36:25', 'd', 12),
-(15, 4, '2018-08-15 00:36:59', 'p', 12),
-(16, 4, '2018-08-15 00:37:04', 's', 12),
-(17, 3, '2018-08-15 00:39:53', 'd', 14),
-(18, 3, '2018-08-15 01:19:07', 'd', NULL),
-(19, 3, '2018-08-15 01:19:26', 'd', 14),
-(20, 3, '2018-08-15 01:19:40', 'p', 14),
-(21, 3, '2018-08-15 01:19:47', 's', 14),
-(22, 5, '2018-08-15 12:46:41', 'd', 12),
-(23, 5, '2018-08-15 12:47:07', 'p', 12),
-(24, 5, '2018-08-15 12:47:08', 's', 12),
-(25, 6, '2018-08-15 12:47:26', 'm', NULL),
-(26, 6, '2018-08-15 12:51:01', 't', NULL),
-(27, 7, '2018-08-15 12:54:34', 'm', NULL),
-(28, 7, '2018-08-15 12:54:52', 'd', 12),
-(29, 7, '2018-08-15 12:55:07', 'p', 12),
-(30, 7, '2018-08-15 12:55:09', 's', 12);
+(37, 15, '2018-09-11 22:38:38', 'm', NULL),
+(38, 15, '2018-09-11 22:52:16', 'd', NULL),
+(39, 15, '2018-09-11 22:53:43', 'd', 12),
+(45, 18, '2018-09-11 23:02:57', 'm', NULL),
+(46, 19, '2018-09-11 23:16:59', 'm', NULL),
+(47, 20, '2018-09-11 23:18:18', 'm', NULL),
+(48, 18, '2018-09-11 23:21:04', 'p', NULL);
 
 -- --------------------------------------------------------
 
@@ -242,6 +225,8 @@ CREATE TABLE `surat` (
   `nama_file` varchar(191) NOT NULL,
   `level` enum('kd','s','kb') NOT NULL DEFAULT 'kd',
   `id_bidang` int(11) DEFAULT NULL,
+  `id_jenis` int(11) NOT NULL,
+  `prioritas` enum('st','t','n') NOT NULL,
   `status` enum('m','d','p','s','t') NOT NULL DEFAULT 'm'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -249,14 +234,11 @@ CREATE TABLE `surat` (
 -- Dumping data for table `surat`
 --
 
-INSERT INTO `surat` (`id_surat`, `nosurat`, `tanggal_surat`, `pengirim`, `perihal`, `nama_file`, `level`, `id_bidang`, `status`) VALUES
-(1, '132', '2018-08-14', 'Bapeda Lampung Timur', 'Undangan', 'Capture 2.PNG', 'kd', NULL, 's'),
-(2, '123', '2018-08-12', 'Bapeda Lambar', 'Laporan', 'Capture 3.PNG', 'kd', NULL, 's'),
-(3, '142', '2018-08-16', 'Bapeda Tuba', 'Undangan', 'Capture.PNG', 'kb', 14, 's'),
-(4, '123', '2018-08-07', 'pundung', 'membuat penasaran', 'Koala.jpg', 'kb', 12, 's'),
-(5, '125', '2018-08-17', 'agunngs', 'Laporan', 'Jellyfish.jpg', 'kb', 12, 's'),
-(6, '78i', '2018-08-15', 'safasf', 'fdfsa', 'Screenshot from 2018-07-27 10-35-25.png', 'kd', NULL, 't'),
-(7, '12312eqwasfdsf', '2018-08-15', 'qewfsegdfm', 'wqwafesg', 'halaman login.png', 'kb', 12, 's');
+INSERT INTO `surat` (`id_surat`, `nosurat`, `tanggal_surat`, `pengirim`, `perihal`, `nama_file`, `level`, `id_bidang`, `id_jenis`, `prioritas`, `status`) VALUES
+(15, '0101003', '2018-09-11', 'Sekretariat DPRD', 'Undangan Rapat Paripurna', 'Surat merupakan salah satu media komunikasi yang sangat penting dalam suatu instansi (Repaired) (Repaired).pdf', 'kb', 12, 1, 'st', 'd'),
+(18, '0102003', '2018-09-11', 'Sekretariat Keuangan', 'Undangan Rapat Paripurna', 'METODE PELAKSANAAN.pdf', 's', NULL, 2, 't', 'p'),
+(19, '0103003', '2018-09-11', 'Dinas Perhubungan', 'Permohonan Pencairan Dana', 'fixv1.docx', 's', NULL, 4, 'n', 'm'),
+(20, '0103004', '2018-09-11', 'Dinas Perikanan', 'Permohonan Pencairan Dana', 'fix.docx', 's', NULL, 2, 'st', 'm');
 
 -- --------------------------------------------------------
 
@@ -269,7 +251,7 @@ CREATE TABLE `user` (
   `username` varchar(191) NOT NULL,
   `password` varchar(191) NOT NULL,
   `nama` varchar(191) NOT NULL,
-  `level` enum('a','kd','s','kb','o') NOT NULL,
+  `level` enum('kd','s','kb','o') NOT NULL,
   `id_bidang` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -278,10 +260,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `nama`, `level`, `id_bidang`) VALUES
-(1, 'admin', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec', 'Administrator', 'a', NULL),
 (2, 'sekertaris', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Sekertaris', 's', NULL),
 (3, 'operator', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Operator', 'o', NULL),
-(4, 'sosmbut', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Sos Mbut', 'kb', 12),
+(4, 'sosbud', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Sosbud', 'kb', 12),
 (5, 'kadis', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Kadis', 'kd', NULL),
 (6, 'tika', '70b30dea1d4ba10adc90573c5b32b56e3d503f45f4cf8c55abc46cb2d963545f7f7e9930ea1297fd41c6153ba2808cc38f712b27b97df3364f53450863d95ab2', 'Tika Jembris', 'kb', 14);
 
@@ -296,6 +277,12 @@ ALTER TABLE `bidang`
   ADD PRIMARY KEY (`id_bidang`);
 
 --
+-- Indexes for table `jenis`
+--
+ALTER TABLE `jenis`
+  ADD PRIMARY KEY (`id_jenis`);
+
+--
 -- Indexes for table `log_surat`
 --
 ALTER TABLE `log_surat`
@@ -308,7 +295,8 @@ ALTER TABLE `log_surat`
 --
 ALTER TABLE `surat`
   ADD PRIMARY KEY (`id_surat`),
-  ADD KEY `bidang_id` (`id_bidang`);
+  ADD KEY `bidang_id` (`id_bidang`),
+  ADD KEY `id_jenis` (`id_jenis`);
 
 --
 -- Indexes for table `user`
@@ -329,16 +317,22 @@ ALTER TABLE `bidang`
   MODIFY `id_bidang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
+-- AUTO_INCREMENT for table `jenis`
+--
+ALTER TABLE `jenis`
+  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `log_surat`
 --
 ALTER TABLE `log_surat`
-  MODIFY `id_log_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_log_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `surat`
 --
 ALTER TABLE `surat`
-  MODIFY `id_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -361,7 +355,8 @@ ALTER TABLE `log_surat`
 -- Constraints for table `surat`
 --
 ALTER TABLE `surat`
-  ADD CONSTRAINT `surat_ibfk_1` FOREIGN KEY (`id_bidang`) REFERENCES `bidang` (`id_bidang`);
+  ADD CONSTRAINT `surat_ibfk_1` FOREIGN KEY (`id_bidang`) REFERENCES `bidang` (`id_bidang`),
+  ADD CONSTRAINT `surat_ibfk_2` FOREIGN KEY (`id_jenis`) REFERENCES `jenis` (`id_jenis`);
 
 --
 -- Constraints for table `user`
