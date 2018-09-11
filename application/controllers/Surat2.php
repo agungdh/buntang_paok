@@ -58,7 +58,7 @@ class Surat2 extends CI_Controller {
 	function aksi_disposisi() {
 		$id_surat = $this->input->post('id_surat');
 		$id_bidang = $this->input->post('id_bidang');
-		$level = $id_bidang == 's' ? 's' : 'kb';
+		$level = $id_bidang == 'kd' ? 'kd' : 'kb';
 
 		$this->db->query('CALL sp_disposisi_surat(?, ?, ?)', [$id_surat, $level, $id_bidang]);
 

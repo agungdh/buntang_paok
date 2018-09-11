@@ -117,7 +117,7 @@
                       <a class="btn btn-primary" href="<?php echo base_url('surat2/disposisi/' . $item->id_surat); ?>" data-toggle="tooltip" title="Disposisi"><i class="fa fa-share"></i></a>
                       <a class="btn btn-primary" href="javascript:void(0)" onclick="proses('<?php echo $item->id_surat; ?>')" data-toggle="tooltip" title="Proses"><i class="fa fa-gear"></i></a>
                       <?php
-                      if ($this->session->level == 'kd') {
+                      if ($this->session->level == 'kd' || $this->session->level == 's') {
                         ?>
                         <a class="btn btn-primary" href="javascript:void(0)" onclick="tolak('<?php echo $item->id_surat; ?>')" data-toggle="tooltip" title="Tolak"><i class="fa fa-close"></i></a>
                         <?php
