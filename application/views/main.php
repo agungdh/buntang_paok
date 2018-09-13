@@ -84,7 +84,7 @@ $now = date('YmdHis');
                 <th>Pengirim</th>
                 <th>Perihal</th>
                 <th>Jenis</th>
-                <th>Prioritas</th>
+                <!-- <th>Prioritas</th> -->
                 <th>Lampiran</th>
                 <th>Status</th>
               </tr>
@@ -119,13 +119,13 @@ $now = date('YmdHis');
                 }
                 ?>
                 <?php 
-                if ($item->prioritas =='st') {
-                  echo "<td> <a class='btn btn-danger btn-sm' > <font color='white' > Sangat Penting</font></a></td>";
-                }elseif ($item->prioritas=='t') {
-                  echo "<td> <a class='btn btn-warning btn-sm' > <font color='white' > Penting</font></a></td>";
-                }else{
-                  echo "<td> <a class='btn btn-info btn-sm' > <font color='white' > Biasa</font></a></td>";
-                }
+                // if ($item->prioritas =='st') {
+                //   echo "<td> <a class='btn btn-danger btn-sm' > <font color='white' > Sangat Penting</font></a></td>";
+                // }elseif ($item->prioritas=='t') {
+                //   echo "<td> <a class='btn btn-warning btn-sm' > <font color='white' > Penting</font></a></td>";
+                // }else{
+                //   echo "<td> <a class='btn btn-info btn-sm' > <font color='white' > Biasa</font></a></td>";
+                // }
 
                  ?>
 
