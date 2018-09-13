@@ -50,9 +50,9 @@
           <div class="form-group">
             <label class="control-label">Prioritas</label>
             <select class="form-control select2" required name="data[prioritas]" id="prioritas">
-              <option value="st">Sangat Tinggi</option>
-              <option value="t">Tinggi</option>
-              <option value="n">Normal</option>
+              <option value="st">Sangat Penting</option>
+              <option value="t">Penting</option>
+              <option value="n">Biasa</option>
             </select>
           </div>
 

@@ -85,7 +85,7 @@ $now = date('YmdHis');
                 <th>Perihal</th>
                 <th>Jenis</th>
                 <th>Prioritas</th>
-                <th>Berkas</th>
+                <th>Lampiran</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -102,7 +102,7 @@ $now = date('YmdHis');
                 <?php
                 switch ($item->prioritas) {
                   case 'st':
-                    $prioritas = 'Sangat Tinggi';
+                    $prioritas =  'Sangat Tinggi';
                     break;
                   
                   case 't':
@@ -118,7 +118,17 @@ $now = date('YmdHis');
                     break;
                 }
                 ?>
-                <td><?php echo $prioritas; ?></td>
+                <?php 
+                if ($item->prioritas =='st') {
+                  echo "<td> <a class='btn btn-danger btn-sm' > <font color='white' > Sangat Penting</font></a></td>";
+                }elseif ($item->prioritas=='t') {
+                  echo "<td> <a class='btn btn-warning btn-sm' > <font color='white' > Penting</font></a></td>";
+                }else{
+                  echo "<td> <a class='btn btn-info btn-sm' > <font color='white' > Biasa</font></a></td>";
+                }
+
+                 ?>
+
                   <td><a href="<?php echo base_url('tools/download/' . $item->id_surat); ?>"><?php echo $item->nama_file; ?></a></td>
                   <?php
                   switch ($item->status) {
@@ -240,7 +250,7 @@ var data = {
             datasets: [
                   {
                         label: "Surat Masuk",
-                        fillColor: "rgba(220,220,220,0.2)",
+                        fillColor: "rgba(20,220,220,0.2)",
                         strokeColor: "rgba(220,220,220,1)",
                         pointColor: "rgba(220,220,220,1)",
                         pointStrokeColor: "#fff",

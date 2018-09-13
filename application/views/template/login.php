@@ -12,7 +12,7 @@ $now = date('YmdHis');
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/main.css'); ?>">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>JUDUL</title>
+    <title>E-DISPOSISI</title>
 
     <!-- Favicon -->
     <?php
@@ -30,7 +30,10 @@ $now = date('YmdHis');
     </section>
     <section class="login-content">
       <div class="logo">
-        <h1>JUDUL</h1>
+        <CENTER>
+        <h1>LOGIN</h1>
+        <h2>APLIKASI E-DISPOSISI BERBASIS <i>WEB</i> </h2>
+      </CENTER>
       </div>
       <div class="login-box">
         <form class="login-form" method="post" action="<?php echo base_url('welcome/login'); ?>">

@@ -56,4 +56,5 @@ function status(id) {
         $("#exampleModalCenter").modal();
     });
 }
+
 </script>

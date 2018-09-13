@@ -41,9 +41,10 @@
             <p><a href="<?php echo base_url('tools/download/' . $data['surat']->id_surat); ?>"><?php echo $data['surat']->nama_file; ?></a></p>
           </div>
 
+
           <div class="form-group">
             <label class="control-label">Disposisi</label>
-            <select class="form-control select2" required name="id_bidang" id="id_bidang">
+              <select class="form-control select2" required name="id_bidang" id="id_bidang">
               <?php
               if ($this->session->level != 'kd') {
                 ?>
@@ -61,6 +62,11 @@
               }
               ?>
             </select>
+          </div>
+          
+         <div class="form-group">
+            <label class="control-label">Memo</label>
+              <input type="text" name="memo" class="form-control" required  placeholder="Masukan Memo" value="<?php echo $data['surat']->memo; ?>" >
           </div>
 
           </div>

@@ -161,9 +161,11 @@ class Surat extends CI_Controller {
               <td>Berkas</td>
               <td id="berkas">: <a href="<?php echo base_url('tools/download/' . $surat->id_surat); ?>"><?php echo $surat->nama_file; ?></a></td>
             </tr>
+             
           </tbody>
         </table>
 		<?php
 	}
+
 
 }

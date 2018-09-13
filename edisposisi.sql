@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Sep 11, 2018 at 06:27 PM
--- Server version: 10.1.34-MariaDB-0ubuntu0.18.04.1
--- PHP Version: 5.6.36
+-- Host: 127.0.0.1
+-- Generation Time: 13 Sep 2018 pada 04.11
+-- Versi Server: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -24,15 +24,16 @@ SET time_zone = "+00:00";
 
 DELIMITER $$
 --
--- Procedures
+-- Prosedur
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_disposisi_surat` (IN `p_id_surat` INT, IN `p_level` ENUM('kd','kb'), IN `p_id_bidang` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_disposisi_surat` (IN `p_id_surat` INT, IN `p_level` ENUM('kd','kb'), IN `p_memo` TEXT, IN `p_id_bidang` INT)  NO SQL
 BEGIN
 
 IF (p_level = 'kd') THEN
     UPDATE surat
     SET level = p_level,
-    status = 'd'
+    status = 'd',
+    memo = p_memo
     WHERE id_surat = p_id_surat;
     
     INSERT INTO log_surat
@@ -43,7 +44,8 @@ ELSEIF (p_level = 'kb') THEN
     UPDATE surat
     SET level = p_level,
     id_bidang = p_id_bidang,
-    status = 'd'
+    status = 'd',
+    memo = p_memo
     WHERE id_surat = p_id_surat;
     
     INSERT INTO log_surat
@@ -143,7 +145,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bidang`
+-- Struktur dari tabel `bidang`
 --
 
 CREATE TABLE `bidang` (
@@ -152,7 +154,7 @@ CREATE TABLE `bidang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `bidang`
+-- Dumping data untuk tabel `bidang`
 --
 
 INSERT INTO `bidang` (`id_bidang`, `bidang`) VALUES
@@ -164,7 +166,7 @@ INSERT INTO `bidang` (`id_bidang`, `bidang`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jenis`
+-- Struktur dari tabel `jenis`
 --
 
 CREATE TABLE `jenis` (
@@ -173,7 +175,7 @@ CREATE TABLE `jenis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `jenis`
+-- Dumping data untuk tabel `jenis`
 --
 
 INSERT INTO `jenis` (`id_jenis`, `jenis`) VALUES
@@ -186,7 +188,7 @@ INSERT INTO `jenis` (`id_jenis`, `jenis`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `log_surat`
+-- Struktur dari tabel `log_surat`
 --
 
 CREATE TABLE `log_surat` (
@@ -198,7 +200,7 @@ CREATE TABLE `log_surat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `log_surat`
+-- Dumping data untuk tabel `log_surat`
 --
 
 INSERT INTO `log_surat` (`id_log_surat`, `id_surat`, `waktu`, `aksi`, `id_bidang`) VALUES
@@ -206,14 +208,21 @@ INSERT INTO `log_surat` (`id_log_surat`, `id_surat`, `waktu`, `aksi`, `id_bidang
 (38, 15, '2018-09-11 22:52:16', 'd', NULL),
 (39, 15, '2018-09-11 22:53:43', 'd', 12),
 (45, 18, '2018-09-11 23:02:57', 'm', NULL),
-(46, 19, '2018-09-11 23:16:59', 'm', NULL),
 (47, 20, '2018-09-11 23:18:18', 'm', NULL),
-(48, 18, '2018-09-11 23:21:04', 'p', NULL);
+(48, 18, '2018-09-11 23:21:04', 'p', NULL),
+(49, 21, '2018-09-12 09:32:05', 'm', NULL),
+(50, 21, '2018-09-12 09:33:09', 'd', 12),
+(51, 21, '2018-09-12 09:34:53', 'p', 12),
+(52, 21, '2018-09-12 09:36:02', 's', 12),
+(53, 20, '2018-09-12 20:28:57', 'd', 12),
+(54, 20, '2018-09-12 20:36:36', 'd', NULL),
+(55, 15, '2018-09-12 20:57:12', 'd', 11),
+(56, 15, '2018-09-12 21:18:06', 'd', 13);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `surat`
+-- Struktur dari tabel `surat`
 --
 
 CREATE TABLE `surat` (
@@ -227,23 +236,24 @@ CREATE TABLE `surat` (
   `id_bidang` int(11) DEFAULT NULL,
   `id_jenis` int(11) NOT NULL,
   `prioritas` enum('st','t','n') NOT NULL,
-  `status` enum('m','d','p','s','t') NOT NULL DEFAULT 'm'
+  `status` enum('m','d','p','s','t') NOT NULL DEFAULT 'm',
+  `memo` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `surat`
+-- Dumping data untuk tabel `surat`
 --
 
-INSERT INTO `surat` (`id_surat`, `nosurat`, `tanggal_surat`, `pengirim`, `perihal`, `nama_file`, `level`, `id_bidang`, `id_jenis`, `prioritas`, `status`) VALUES
-(15, '0101003', '2018-09-11', 'Sekretariat DPRD', 'Undangan Rapat Paripurna', 'Surat merupakan salah satu media komunikasi yang sangat penting dalam suatu instansi (Repaired) (Repaired).pdf', 'kb', 12, 1, 'st', 'd'),
-(18, '0102003', '2018-09-11', 'Sekretariat Keuangan', 'Undangan Rapat Paripurna', 'METODE PELAKSANAAN.pdf', 's', NULL, 2, 't', 'p'),
-(19, '0103003', '2018-09-11', 'Dinas Perhubungan', 'Permohonan Pencairan Dana', 'fixv1.docx', 's', NULL, 4, 'n', 'm'),
-(20, '0103004', '2018-09-11', 'Dinas Perikanan', 'Permohonan Pencairan Dana', 'fix.docx', 's', NULL, 2, 'st', 'm');
+INSERT INTO `surat` (`id_surat`, `nosurat`, `tanggal_surat`, `pengirim`, `perihal`, `nama_file`, `level`, `id_bidang`, `id_jenis`, `prioritas`, `status`, `memo`) VALUES
+(15, '0101003', '2018-09-11', 'Sekretariat DPRD', 'Undangan Rapat Paripurna', 'Surat merupakan salah satu media komunikasi yang sangat penting dalam suatu instansi (Repaired) (Repaired).pdf', 'kb', 13, 1, 'st', 'd', 'coba cek lagi ya'),
+(18, '0102003', '2018-09-11', 'Sekretariat Keuangan', 'Undangan Rapat Paripurna', 'METODE PELAKSANAAN.pdf', 's', NULL, 2, 't', 'p', ''),
+(20, '0103004', '2018-09-11', 'Dinas Perikanan', 'Permohonan Pencairan Dana', 'fix.docx', 'kd', 12, 4, 'st', 'd', ''),
+(21, '0103005', '2018-09-12', 'Dinas Pendidikan dan Kebudayaan', 'Undangan Rapat', 'Surat Perintah Kerja.docx', 'kb', 12, 5, 't', 's', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -256,15 +266,17 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `nama`, `level`, `id_bidang`) VALUES
-(2, 'sekertaris', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Sekertaris', 's', NULL),
+(2, 'sekretaris', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Sekretaris', 's', NULL),
 (3, 'operator', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Operator', 'o', NULL),
-(4, 'sosbud', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Sosbud', 'kb', 12),
-(5, 'kadis', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Kadis', 'kd', NULL),
-(6, 'tika', '70b30dea1d4ba10adc90573c5b32b56e3d503f45f4cf8c55abc46cb2d963545f7f7e9930ea1297fd41c6153ba2808cc38f712b27b97df3364f53450863d95ab2', 'Tika Jembris', 'kb', 14);
+(4, 'sosbud', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Kabid Sosbud', 'kb', 12),
+(5, 'kadis', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Kepala Dinas', 'kd', NULL),
+(6, 'litbang', '70b30dea1d4ba10adc90573c5b32b56e3d503f45f4cf8c55abc46cb2d963545f7f7e9930ea1297fd41c6153ba2808cc38f712b27b97df3364f53450863d95ab2', 'Kabid Litbang', 'kb', 14),
+(7, 'psda', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Kabid PSDA', 'kb', 11),
+(8, 'ipw', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 'Kabid IPW', 'kb', 13);
 
 --
 -- Indexes for dumped tables
@@ -320,46 +332,46 @@ ALTER TABLE `bidang`
 -- AUTO_INCREMENT for table `jenis`
 --
 ALTER TABLE `jenis`
-  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `log_surat`
 --
 ALTER TABLE `log_surat`
-  MODIFY `id_log_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id_log_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `surat`
 --
 ALTER TABLE `surat`
-  MODIFY `id_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `log_surat`
+-- Ketidakleluasaan untuk tabel `log_surat`
 --
 ALTER TABLE `log_surat`
   ADD CONSTRAINT `log_surat_ibfk_1` FOREIGN KEY (`id_bidang`) REFERENCES `bidang` (`id_bidang`),
   ADD CONSTRAINT `log_surat_ibfk_2` FOREIGN KEY (`id_surat`) REFERENCES `surat` (`id_surat`);
 
 --
--- Constraints for table `surat`
+-- Ketidakleluasaan untuk tabel `surat`
 --
 ALTER TABLE `surat`
   ADD CONSTRAINT `surat_ibfk_1` FOREIGN KEY (`id_bidang`) REFERENCES `bidang` (`id_bidang`),
   ADD CONSTRAINT `surat_ibfk_2` FOREIGN KEY (`id_jenis`) REFERENCES `jenis` (`id_jenis`);
 
 --
--- Constraints for table `user`
+-- Ketidakleluasaan untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_bidang`) REFERENCES `bidang` (`id_bidang`);

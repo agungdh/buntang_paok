@@ -52,9 +52,9 @@
           <div class="form-group">
             <label class="control-label">Prioritas</label>
             <select class="form-control select2" required name="data[prioritas]" id="prioritas">
-              <option <?php echo $data['surat']->prioritas == 'st' ? 'selected' : null ?> value="st">Sangat Tinggi</option>
-              <option <?php echo $data['surat']->prioritas == 't' ? 'selected' : null ?> value="t">Tinggi</option>
-              <option <?php echo $data['surat']->prioritas == 'n' ? 'selected' : null ?> value="n">Normal</option>
+              <option <?php echo $data['surat']->prioritas == 'st' ? 'selected' : null ?> value="st">Sangat Penting</option>
+              <option <?php echo $data['surat']->prioritas == 't' ? 'selected' : null ?> value="t">Penting</option>
+              <option <?php echo $data['surat']->prioritas == 'n' ? 'selected' : null ?> value="n">Biasa</option>
             </select>
           </div>
 
