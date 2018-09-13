@@ -59,7 +59,7 @@
                       $status = 'Surat Diproses';
                       break;
                     case 's':
-                      $status = 'Surat Selesai Proses';
+                      $status = 'Surat Selesai Diproses';
                       break;
                     case 't':
                       $status = 'Surat Ditolak';
