@@ -53,7 +53,9 @@ class Welcome extends CI_Controller {
               	$serah = false;
               	if ($log_surat_sebelumnya->aksi == 'm' && $log_surat_sebelumnya->id_bidang == null) {
               		$dari = 'Sekertaris';
-              		$serah = true;
+              		if ($item->id_bidang == null) {
+              			$serah = true;
+              		}
               	} elseif ($log_surat_sebelumnya->aksi == 'd' && $log_surat_sebelumnya->id_bidang == null) {
               		$dari = 'Kepala Dinas';
               	} else {
@@ -63,7 +65,7 @@ class Welcome extends CI_Controller {
               	if ($serah == true) {
               		$status = 'Sekretaris Menyerahkan Surat Kepada Kepala Dinas';
               	} else {
-	                $status = 'Disposisi Surat Dari ' . $dari . ' Kepada ';
+	                $status = 'Surat Didisposisi Dari ' . $dari . ' Kepada ';
 	                if ($item->id_bidang != null) {
 	                	$status .= $this->db->get_where('bidang', ['id_bidang' => $item->id_bidang])->row()->bidang;
 	                } else {
@@ -72,14 +74,14 @@ class Welcome extends CI_Controller {
               	}
                 break;
               case 'p':
-                $status = 'Proses Surat';
-                break;
-              case 's':
-                $status = 'Proses Selesai';
-                break;
-              case 't':
-                $status = 'Surat Ditolak';
-                break;
+	              $status = 'Surat Diproses';
+	              break;
+	            case 's':
+	              $status = 'Surat Selesai Proses';
+	              break;
+	            case 't':
+	              $status = 'Surat Ditolak';
+	              break;
               default:
                 redirect(base_url());
                 break;

@@ -50,20 +50,20 @@
                 <?php
                 switch ($item->status) {
                   case 'm':
-                    $status = 'Surat Masuk';
-                    break;
-                  case 'd':
-                    $status = 'Disposisi Surat';
-                    break;
-                  case 'p':
-                    $status = 'Proses Surat';
-                    break;
-                  case 's':
-                    $status = 'Proses Selesai';
-                    break;
-                  case 't':
-                    $status = 'Surat Ditolak';
-                    break;
+                      $status = 'Surat Masuk';
+                      break;
+                    case 'd':
+                      $status = 'Surat Didisposisi';
+                      break;
+                    case 'p':
+                      $status = 'Surat Diproses';
+                      break;
+                    case 's':
+                      $status = 'Surat Selesai Proses';
+                      break;
+                    case 't':
+                      $status = 'Surat Ditolak';
+                      break;
                   default:
                     redirect(base_url());
                     break;

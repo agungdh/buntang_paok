@@ -136,13 +136,13 @@ $now = date('YmdHis');
                       $status = 'Surat Masuk';
                       break;
                     case 'd':
-                      $status = 'Disposisi Surat';
+                      $status = 'Surat Didisposisi';
                       break;
                     case 'p':
-                      $status = 'Proses Surat';
+                      $status = 'Surat Diproses';
                       break;
                     case 's':
-                      $status = 'Proses Selesai';
+                      $status = 'Surat Selesai Proses';
                       break;
                     case 't':
                       $status = 'Surat Ditolak';
