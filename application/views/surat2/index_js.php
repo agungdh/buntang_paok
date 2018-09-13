@@ -47,8 +47,8 @@ function tolak(id) {
 };
 
 function status(id) {
-    $.get( "<?php echo base_url('surat/ajax_isisurat/'); ?>" + id, function( data ) {
-        $.get( "<?php echo base_url('surat/ajax_detailsurat/'); ?>" + id, function( data ) {
+    $.get( "<?php echo base_url('welcome/ajax_isisurat/'); ?>" + id, function( data ) {
+        $.get( "<?php echo base_url('welcome/ajax_detailsurat/'); ?>" + id, function( data ) {
             $("#detailsurat").html(data);
         });
 
