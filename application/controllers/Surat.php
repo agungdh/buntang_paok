@@ -106,13 +106,32 @@ class Surat extends CI_Controller {
                 $status = 'Surat Masuk';
                 break;
               case 'd':
-                $status = 'Disposisi Surat (';
-                if ($item->id_bidang != null) {
-                	$status .= $this->db->get_where('bidang', ['id_bidang' => $item->id_bidang])->row()->bidang;
-                } else {
-                	$status .= 'Kepala Dinas';
-                }
-                $status .= ')';
+              	$log_surat_sebelumnya = $this->db->query('SELECT *
+              												FROM log_surat
+              												WHERE id_surat = ?
+              												AND id_log_surat < ?
+              												ORDER BY id_log_surat DESC
+              												LIMIT 1', [$item->id_surat, $item->id_log_surat])->row();
+              	$serah = false;
+              	if ($log_surat_sebelumnya->aksi == 'm' && $log_surat_sebelumnya->id_bidang == null) {
+              		$dari = 'Sekertaris';
+              		$serah = true;
+              	} elseif ($log_surat_sebelumnya->aksi == 'd' && $log_surat_sebelumnya->id_bidang == null) {
+              		$dari = 'Kepala Dinas';
+              	} else {
+              		$dari = $this->db->get_where('bidang', ['id_bidang' => $log_surat_sebelumnya->id_bidang])->row()->bidang;
+              	}
+
+              	if ($serah == true) {
+              		$status = 'Sekretaris Menyerahkan Surat Kepada Kepala Dinas';
+              	} else {
+	                $status = 'Disposisi Surat Dari ' . $dari . ' Kepada ';
+	                if ($item->id_bidang != null) {
+	                	$status .= $this->db->get_where('bidang', ['id_bidang' => $item->id_bidang])->row()->bidang;
+	                } else {
+	                	$status .= 'Kepala Dinas';
+	                }
+              	}
                 break;
               case 'p':
                 $status = 'Proses Surat';
@@ -132,6 +151,16 @@ class Surat extends CI_Controller {
 				<td><?php echo $this->pustaka->tanggal_waktu_indo($item->waktu); ?></td>
 				<td><?php echo $status; ?></td>
 			</tr>
+			<?php
+			if ($status == 'Surat Masuk') {
+				?>
+				<tr>
+					<td><?php echo $this->pustaka->tanggal_waktu_indo($item->waktu); ?></td>
+					<td>Surat Diterima Sekretaris</td>
+				</tr>
+				<?php
+			}
+			?>
 			<?php			
 		}
 	}
