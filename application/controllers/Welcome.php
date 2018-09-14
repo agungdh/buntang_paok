@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use Dompdf\Dompdf;
+
 class Welcome extends CI_Controller {
 	function __construct(){
 		parent::__construct();
@@ -130,10 +132,49 @@ class Welcome extends CI_Controller {
               <td>Berkas</td>
               <td id="berkas">: <a href="<?php echo base_url('tools/download/' . $surat->id_surat); ?>"><?php echo $surat->nama_file; ?></a></td>
             </tr>
-             
           </tbody>
         </table>
 		<?php
+	}
+
+	function ajax_memo($id_surat) {
+		$log_surat_terakhir = $this->db->query('SELECT *
+												FROM log_surat
+												WHERE id_surat = ?
+												ORDER BY id_log_surat DESC
+												LIMIT 1', [$id_surat])->row();
+
+		echo $log_surat_terakhir->memo;
+	}
+
+	function ajax_btn_download_memo($id_surat) {
+		?>
+		<a class="btn btn-primary" href="<?php echo base_url('welcome/download_memo/' . $id_surat); ?>">Download</a>
+		<?php
+	}
+
+	function download_memo($id_surat) {
+		$data['surat'] = $this->db->get_where('surat', ['id_surat' => $id_surat])->row();
+		$data['log_surat_terakhir'] = $this->db->query('SELECT *
+												FROM log_surat
+												WHERE id_surat = ?
+												ORDER BY id_log_surat DESC
+												LIMIT 1', [$id_surat])->row();
+
+		$html = $this->load->view('download_memo', $data, true);
+
+		// instantiate and use the dompdf class
+		$dompdf = new Dompdf();
+		$dompdf->loadHtml($html);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper('A4', 'potrait');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream();
 	}
 
 }

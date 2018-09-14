@@ -66,7 +66,7 @@
           
          <div class="form-group">
             <label class="control-label">Memo</label>
-              <input type="text" name="memo" class="form-control" required  placeholder="Masukan Memo" value="<?php echo $data['surat']->memo; ?>" >
+              <textarea class="form-control" name="memo" id="memo" placeholder="Masukan Memo" rows="10"></textarea>
           </div>
 
           </div>

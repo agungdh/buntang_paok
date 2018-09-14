@@ -97,7 +97,7 @@
                  ?>
 
                 <td><a href="<?php echo base_url('tools/download/' . $item->id_surat); ?>"><?php echo $item->nama_file; ?></a></td>
-                 <td><?php echo $item->memo; ?></td>
+                 <td><a href="javascript:void(0)" onclick="memo('<?php echo $item->id_surat; ?>')">Memo</a></td>
                 <?php
                 switch ($item->status) {
                   case 'm':
@@ -155,8 +155,8 @@
   </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- Modal Status -->
+<div class="modal fade" id="modalStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -180,6 +180,28 @@
         </table>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Memo -->
+<div class="modal fade" id="modalMemo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Memo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalmbodi">
+        <div id="detailsuratMemo"></div>
+        <textarea class="form-control" id="memo" readonly rows="10"></textarea>
+      </div>
+      <div class="modal-footer">
+        <div id="btn_download_memo"></div>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>

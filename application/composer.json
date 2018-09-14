@@ -1,6 +1,7 @@
 {
     "require": {
         "gumlet/php-image-resize": "^1.8",
-        "apfelbox/php-file-download": "^2.1"
+        "apfelbox/php-file-download": "^2.1",
+        "dompdf/dompdf": "^0.8.2"
     }
 }

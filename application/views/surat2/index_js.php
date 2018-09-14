@@ -53,7 +53,21 @@ function status(id) {
         });
 
         $("#tabelbodi").html(data);
-        $("#exampleModalCenter").modal();
+        $("#modalStatus").modal();
+    });
+}
+
+function memo(id) {
+    $.get( "<?php echo base_url('welcome/ajax_memo/'); ?>" + id, function( data ) {
+        $.get( "<?php echo base_url('welcome/ajax_detailsurat/'); ?>" + id, function( data ) {
+            $("#detailsuratMemo").html(data);
+        });
+        $.get( "<?php echo base_url('welcome/ajax_btn_download_memo/'); ?>" + id, function( data ) {
+            $("#btn_download_memo").html(data);
+        });
+
+        $("#memo").html(data);
+        $("#modalMemo").modal();
     });
 }
 
