@@ -76,13 +76,72 @@ class Welcome extends CI_Controller {
               	}
                 break;
               case 'p':
-	              $status = 'Surat Diproses';
+              	  $log_surat_sebelumnya = $this->db->query('SELECT *
+              												FROM log_surat
+              												WHERE id_surat = ?
+              												AND id_log_surat < ?
+              												ORDER BY id_log_surat DESC
+              												LIMIT 1', [$item->id_surat, $item->id_log_surat])->row();
+
+              		$serah = false;
+	              	if ($log_surat_sebelumnya->aksi == 'm' && $log_surat_sebelumnya->id_bidang == null) {
+	              		$dari = 'Sekertaris';
+	              		if ($item->id_bidang == null) {
+	              			$serah = true;
+	              		}
+	              	} elseif ($log_surat_sebelumnya->aksi == 'd' && $log_surat_sebelumnya->id_bidang == null) {
+	              		$dari = 'Kepala Dinas';
+	              	} else {
+	              		$dari = $this->db->get_where('bidang', ['id_bidang' => $log_surat_sebelumnya->id_bidang])->row()->bidang;
+	              	}
+
+	              $status = 'Surat Diproses Oleh ' . $dari;
 	              break;
 	            case 's':
-	              $status = 'Surat Selesai Proses';
+	              	$log_surat_sebelumnya = $this->db->query('SELECT *
+              												FROM log_surat
+              												WHERE id_surat = ?
+              												AND id_log_surat < ?
+              												ORDER BY id_log_surat DESC
+              												LIMIT 1', [$item->id_surat, $item->id_log_surat])->row();
+
+              		$serah = false;
+	              	if ($log_surat_sebelumnya->aksi == 'm' && $log_surat_sebelumnya->id_bidang == null) {
+	              		$dari = 'Sekertaris';
+	              		if ($item->id_bidang == null) {
+	              			$serah = true;
+	              		}
+	              	} elseif ($log_surat_sebelumnya->aksi == 'd' && $log_surat_sebelumnya->id_bidang == null) {
+	              		$dari = 'Kepala Dinas';
+	              	} else {
+	              		$dari = $this->db->get_where('bidang', ['id_bidang' => $log_surat_sebelumnya->id_bidang])->row()->bidang;
+	              	}
+
+
+	              $status = 'Surat Selesai Diproses Oleh ' . $dari;
 	              break;
 	            case 't':
-	              $status = 'Surat Ditolak';
+	              	$log_surat_sebelumnya = $this->db->query('SELECT *
+              												FROM log_surat
+              												WHERE id_surat = ?
+              												AND id_log_surat < ?
+              												ORDER BY id_log_surat DESC
+              												LIMIT 1', [$item->id_surat, $item->id_log_surat])->row();
+
+              		$serah = false;
+	              	if ($log_surat_sebelumnya->aksi == 'm' && $log_surat_sebelumnya->id_bidang == null) {
+	              		$dari = 'Sekertaris';
+	              		if ($item->id_bidang == null) {
+	              			$serah = true;
+	              		}
+	              	} elseif ($log_surat_sebelumnya->aksi == 'd' && $log_surat_sebelumnya->id_bidang == null) {
+	              		$dari = 'Kepala Dinas';
+	              	} else {
+	              		$dari = $this->db->get_where('bidang', ['id_bidang' => $log_surat_sebelumnya->id_bidang])->row()->bidang;
+	              	}
+
+
+	              $status = 'Surat Ditolak Oleh ' . $dari;
 	              break;
               default:
                 redirect(base_url());
