@@ -7,7 +7,7 @@ var table = $('.datatable').DataTable( {
 function proses(id) {
     swal({
         title: 'Apakah anda yakin?',
-        text: "Data akan diproses!",
+        text: "Surat akan diproses!",
         type: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Proses!'
@@ -21,7 +21,7 @@ function proses(id) {
 function selesai(id) {
     swal({
         title: 'Apakah anda yakin?',
-        text: "Data akan diselesai!",
+        text: "Surat Selesai Diproses!",
         type: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Selesai!'
@@ -35,7 +35,7 @@ function selesai(id) {
 function tolak(id) {
     swal({
         title: 'Apakah anda yakin?',
-        text: "Data akan ditolak!",
+        text: "Surat akan ditolak!",
         type: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Tolak!'

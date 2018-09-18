@@ -7,7 +7,7 @@ var table = $('.datatable').DataTable( {
 function hapus(id) {
     swal({
         title: 'Apakah anda yakin?',
-        text: "Data akan dihapus!",
+        text: "Surat akan dihapus!",
         type: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Hapus!'

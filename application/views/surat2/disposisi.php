@@ -10,14 +10,14 @@
 <div class="row">
   <div class="col-md-12">
     <div class="tile">
-      <h3 class="tile-title">Ubah Surat</h3>
+      <h3 class="tile-title">Disposisi Surat</h3>
       <div class="tile-body">
         <form method="post" action="<?php echo base_url('surat2/aksi_disposisi'); ?>" enctype=multipart/form-data>
 
           <input type="hidden" name="id_surat" value="<?php echo $data['surat']->id_surat; ?>">
 
           <div class="form-group">
-            <label class="control-label">No Surat</label>
+            <label class="control-label">Nomor Surat</label>
             <input class="form-control" type="text" required placeholder="Masukan No Surat" value="<?php echo $data['surat']->nosurat; ?>" readonly>
           </div>
 
@@ -43,7 +43,7 @@
 
 
           <div class="form-group">
-            <label class="control-label">Disposisi</label>
+            <label class="control-label">Tujuan Disposisi</label>
               <select class="form-control select2" required name="id_bidang" id="id_bidang">
               <?php
               if ($this->session->level != 'kd') {
