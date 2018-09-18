@@ -59,7 +59,7 @@ function status(id) {
 
 function memo(id) {
     $.get( "<?php echo base_url('welcome/ajax_memo/'); ?>" + id, function( data ) {
-        $.get( "<?php echo base_url('welcome/ajax_detailsurat/'); ?>" + id, function( data ) {
+        $.get( "<?php echo base_url('welcome/ajax_detailmemo/'); ?>" + id, function( data ) {
             $("#detailsuratMemo").html(data);
         });
         $.get( "<?php echo base_url('welcome/ajax_btn_download_memo/'); ?>" + id, function( data ) {

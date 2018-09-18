@@ -24,7 +24,7 @@
               <th>Jenis</th>
               <th>Prioritas</th>
               <th>Lampiran</th>
-              <th>Memo</th>
+              <th>Disposisi</th>
               <th>Status</th>
               <th>Proses</th>
             </tr>
@@ -97,7 +97,7 @@
                  ?>
 
                 <td><a href="<?php echo base_url('tools/download/' . $item->id_surat); ?>"><?php echo $item->nama_file; ?></a></td>
-                 <td><a href="javascript:void(0)" onclick="memo('<?php echo $item->id_surat; ?>')">Memo</a></td>
+                 <td><a href="javascript:void(0)" onclick="memo('<?php echo $item->id_surat; ?>')">Disposisi</a></td>
                 <?php
                 switch ($item->status) {
                   case 'm':
@@ -198,6 +198,8 @@
       </div>
       <div class="modal-body" id="modalmbodi">
         <div id="detailsuratMemo"></div>
+        <br>
+        <label>Catatan</label>
         <textarea class="form-control" id="memo" readonly rows="10"></textarea>
       </div>
       <div class="modal-footer">

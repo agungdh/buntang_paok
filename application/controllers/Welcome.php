@@ -196,6 +196,76 @@ class Welcome extends CI_Controller {
 		<?php
 	}
 
+	function ajax_detailmemo($id_surat) {
+		$surat = $this->db->get_where('surat', ['id_surat' => $id_surat])->row();
+		$log_surat_sekarang = $this->db->query('SELECT *, date(waktu) tanggal_disposisi
+              												FROM log_surat
+              												WHERE id_surat = ?
+              												ORDER BY id_log_surat DESC
+              												LIMIT 1', [$id_surat])->row();
+		$log_surat_sebelumnya = $this->db->query('SELECT *, date(waktu) tanggal_disposisi
+              												FROM log_surat
+              												WHERE id_surat = ?
+              												AND id_log_surat < ?
+              												ORDER BY id_log_surat DESC
+              												LIMIT 1', [$id_surat, $log_surat_sekarang->id_log_surat])->row();
+		// var_dump([$log_surat_sekarang, $log_surat_sebelumnya]); die;
+		?>
+		<table>
+          <tbody>
+            <tr>
+              <td>Disposisi Dari</td>
+              <?php
+          		if ($log_surat_sebelumnya->aksi == 'm' && $log_surat_sebelumnya->id_bidang == null) {
+              		$dari = 'Sekertaris';
+              	} elseif ($log_surat_sebelumnya->aksi == 'd' && $log_surat_sebelumnya->id_bidang == null) {
+              		$dari = 'Kepala Dinas';
+              	} else {
+              		$dari = $this->db->get_where('bidang', ['id_bidang' => $log_surat_sebelumnya->id_bidang])->row()->bidang;
+              	}
+	          	// if ($log_surat_sebelumnya->id_bidang != null) {
+	           //  	$dari = $this->db->get_where('bidang', ['id_bidang' => $log_surat_sebelumnya->id_bidang])->row()->bidang;
+	           //  } else {
+	           //  	$dari = 'Sekertaris';
+	           //  }
+              ?>
+              <td>: <?php echo $dari; ?></td>
+            </tr>
+            <tr>
+              <td>Tanggal Disposisi</td>
+              <td>: <?php echo $this->pustaka->tanggal_indo($log_surat_sebelumnya->tanggal_disposisi); ?></td>
+            </tr>
+            <tr>
+              <td>Perihal Surat</td>
+              <td>: <?php echo $surat->perihal; ?></td>
+            </tr>
+            <tr>
+              <td>Penerima Disposisi</td>
+              <?php
+          		if ($log_surat_sekarang->aksi == 'm' && $log_surat_sekarang->id_bidang == null) {
+              		$dari = 'Sekertaris';
+              	} elseif ($log_surat_sekarang->aksi == 'd' && $log_surat_sekarang->id_bidang == null) {
+              		$dari = 'Kepala Dinas';
+              	} else {
+              		$dari = $this->db->get_where('bidang', ['id_bidang' => $log_surat_sekarang->id_bidang])->row()->bidang;
+              	}
+	          	// if ($log_surat_sekarang->id_bidang != null) {
+	           //  	$ke = $this->db->get_where('bidang', ['id_bidang' => $log_surat_sekarang->id_bidang])->row()->bidang;
+	           //  } else {
+	           //  	$ke = 'Sekertaris';
+	           //  }
+              ?>
+              <td>: <?php echo $dari; ?></td>
+            </tr>
+            <tr>
+              <td>Isi Disposisi</td>
+              <td>: <?php echo $log_surat_sekarang->isidisposisi; ?></td>
+            </tr>
+          </tbody>
+        </table>
+		<?php
+	}
+
 	function ajax_memo($id_surat) {
 		$log_surat_terakhir = $this->db->query('SELECT *
 												FROM log_surat

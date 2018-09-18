@@ -64,9 +64,24 @@
             </select>
           </div>
           
-         <div class="form-group">
-            <label class="control-label">Memo</label>
-              <textarea class="form-control" name="memo" id="memo" placeholder="Masukan Memo" rows="10"></textarea>
+          <fieldset class="form-group">
+            <label class="control-label">Isi Disposisi</label>
+            <?php
+            foreach ($this->dm->isi_disposisi() as $item) {
+              ?>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="isidisposisi" required value="<?php echo $item; ?>"><?php echo $item; ?>
+                </label>
+              </div>
+              <?php
+            }
+            ?>
+          </fieldset>
+
+          <div class="form-group">
+            <label class="control-label">Catatan</label>
+              <textarea class="form-control" name="memo" id="memo" placeholder="Masukan Catatan" rows="10"></textarea>
           </div>
 
           </div>
