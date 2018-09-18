@@ -97,7 +97,15 @@
                  ?>
 
                 <td><a href="<?php echo base_url('tools/download/' . $item->id_surat); ?>"><?php echo $item->nama_file; ?></a></td>
-                 <td><a href="javascript:void(0)" onclick="memo('<?php echo $item->id_surat; ?>')">Disposisi</a></td>
+                 <td>
+                  <?php
+                  if ($item->status == 'd') {
+                    ?>
+                    <a href="javascript:void(0)" onclick="memo('<?php echo $item->id_surat; ?>')">Disposisi</a>
+                    <?php
+                  }
+                  ?>
+                </td>
                 <?php
                 switch ($item->status) {
                   case 'm':
