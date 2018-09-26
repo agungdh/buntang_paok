@@ -46,7 +46,7 @@
             <label class="control-label">Tujuan Disposisi</label>
               <select class="form-control select2" required name="id_bidang" id="id_bidang">
               <?php
-              if ($this->session->level != 'kd') {
+              if ($this->session->level == 's') {
                 ?>
                 <option value="kd">Kepala Dinas</option>
                 <?php
